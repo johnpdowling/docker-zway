@@ -23,7 +23,7 @@ RUN apt-get update && \
 #    wget http://repo.mosquitto.org/ubuntu/mosquitto-repo.gpg.key && \
 #    apt-key add mosquitto-repo.gpg.key && \
 #    wget http://repo.mosquitto.org/debian/mosquitto-stretch.list -P /etc/apt/sources.list.d/ && \
-    apt-add-repository ppa:mosquitto-dev/mosquitto-ppa && \
+#    apt-add-repository ppa:mosquitto-dev/mosquitto-ppa && \
     apt-get update && \
 # upgrade and install everything zway needs itself in one go
     apt-get install --reinstall -y --no-install-recommends \
