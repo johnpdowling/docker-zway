@@ -3,27 +3,54 @@ MAINTAINER John Klimek <jklimek@gmail.com> (@sofakng)
 
 ENV LD_LIBRARY_PATH=/opt/z-way-server/libs
 ENV PATH=/opt/z-way-server:$PATH
-ENV ZWAY_VERSION=3.0.6
+ENV ZWAY_VERSION=3.1.4
 ENV ZWAY_DIR=/opt/z-way-server
 
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Install additional packages that help to add Z-Wave.Me repository
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        dirmngr \
+        apt-transport-https \
+	  gnupg \
+	  wget && \
+# Add Z-Wave.Me repository
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x7E148E3C && \
+    echo "deb https://repo.z-wave.me/z-way/ubuntu focal main" > /etc/apt/sources.list.d/z-wave-me.list && \
+# Add mosquitto repository
+    wget http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key && \
+    apt-key add mosquitto-repo.gpg.key && \
+    wget http://repo.mosquitto.org/debian/mosquitto-stretch.list -P /etc/apt/sources.list.d/ && \
+    apt-get update && \
+# upgrade and install everything zway needs itself in one go
+    apt-get install --reinstall -y --no-install-recommends \
+        mosquitto \
+      	mosquitto-clients \
+        z-way-full \
+        z-way-server \
+        zbw \
+        webif
+
 # Install required packages
-RUN apt-get update -y \
-  && apt-get install -y \
-    supervisor \
-    curl \
-    libcurl3 \
-    libarchive13 \
-    libavahi-compat-libdnssd1 \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+#RUN apt-get update -y \
+#  && apt-get install -y \
+#    supervisor \
+#    curl \
+#    libcurl3 \
+#    libarchive13 \
+#    libavahi-compat-libdnssd1 \
+#  && apt-get clean \
+#  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Extra packages?
 #   libc-ares2
 
 # Download Z-Way Server for Ubuntu
-RUN curl -SLO https://storage.z-wave.me/z-way-server/z-way-server-Ubuntu-v${ZWAY_VERSION}.tgz \
-  && tar -zxvf z-way-server-Ubuntu-v${ZWAY_VERSION}.tgz -C /opt \
-  && rm z-way-server-Ubuntu-v${ZWAY_VERSION}.tgz
+#RUN curl -SLO https://storage.z-wave.me/z-way-server/z-way-server-Ubuntu-v${ZWAY_VERSION}.tgz \
+#  && tar -zxvf z-way-server-Ubuntu-v${ZWAY_VERSION}.tgz -C /opt \
+#  && rm z-way-server-Ubuntu-v${ZWAY_VERSION}.tgz
 
 # Configure box type for Z-Way (not sure if needed?)
 RUN mkdir -p /etc/z-way  \
