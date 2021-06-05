@@ -58,5 +58,8 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Export the web interface port
 EXPOSE 8083
 
+# folders to plug into
+VOLUME [ "/opt/z-way-server/config", "/opt/z-way-server/automation/storage", "/opt/z-way-server/automation/userModules", "/opt/z-way-server/ZDDX"]
+
 # Start supervisord
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
