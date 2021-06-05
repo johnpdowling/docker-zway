@@ -16,16 +16,12 @@ RUN apt-get update && \
         dirmngr \
 	ca-certificates \
         apt-transport-https \
-	  gnupg \
-	  wget && \
+	gnupg \
+	supervisor \
+	wget && \
 # Add Z-Wave.Me repository
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x7E148E3C && \
     echo "deb https://repo.z-wave.me/z-way/ubuntu focal main" > /etc/apt/sources.list.d/z-wave-me.list && \
-# Add mosquitto repository
-#    wget http://repo.mosquitto.org/ubuntu/mosquitto-repo.gpg.key && \
-#    apt-key add mosquitto-repo.gpg.key && \
-#    wget http://repo.mosquitto.org/debian/mosquitto-stretch.list -P /etc/apt/sources.list.d/ && \
-#    apt-add-repository ppa:mosquitto-dev/mosquitto-ppa && \
     apt-get update && \
 # upgrade and install everything zway needs itself in one go
     apt-get install --reinstall -y --no-install-recommends \
@@ -50,14 +46,6 @@ RUN apt-get update && \
 
 # Extra packages?
 #   libc-ares2
-
-# Download Z-Way Server for Ubuntu
-#RUN curl -SLO https://storage.z-wave.me/z-way-server/z-way-3.1.4_amd64.deb \
-#  && apt-get install ./z-way-3.1.4_amd64.deb
-
-#RUN curl -SLO https://storage.z-wave.me/z-way-server/z-way-server-Ubuntu-v${ZWAY_VERSION}.tgz \
-#  && tar -zxvf z-way-server-Ubuntu-v${ZWAY_VERSION}.tgz -C /opt \
-#  && rm z-way-server-Ubuntu-v${ZWAY_VERSION}.tgz
 
 # Configure box type for Z-Way (not sure if needed?)
 RUN mkdir -p /etc/z-way  \
