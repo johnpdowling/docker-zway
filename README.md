@@ -1,5 +1,5 @@
 # Docker container for Z-Way Server
-This uses Ubuntu 16.04 LTS (Xenial) due to Z-Way dependency on OpenSSL v1.0 and libcurl4.
+This uses Ubuntu (Focal) due to Z-Way debs.
 
 # References:
 * https://github.com/ruimarinho/docker-z-way
