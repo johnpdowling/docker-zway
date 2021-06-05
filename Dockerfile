@@ -31,10 +31,10 @@ RUN apt-get update && \
     apt-get install --reinstall -y --no-install-recommends \
         mosquitto \
       	mosquitto-clients \
-        z-way-full \
+#        z-way-full \
         z-way-server \
         zbw \
-        webif \
+#        webif \
 
 # Install required packages
 #RUN apt-get update -y \
