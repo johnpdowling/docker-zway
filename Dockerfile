@@ -20,9 +20,10 @@ RUN apt-get update && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x7E148E3C && \
     echo "deb https://repo.z-wave.me/z-way/ubuntu focal main" > /etc/apt/sources.list.d/z-wave-me.list && \
 # Add mosquitto repository
-    wget http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key && \
-    apt-key add mosquitto-repo.gpg.key && \
-    wget http://repo.mosquitto.org/debian/mosquitto-stretch.list -P /etc/apt/sources.list.d/ && \
+#    wget http://repo.mosquitto.org/ubuntu/mosquitto-repo.gpg.key && \
+#    apt-key add mosquitto-repo.gpg.key && \
+#    wget http://repo.mosquitto.org/debian/mosquitto-stretch.list -P /etc/apt/sources.list.d/ && \
+    apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
     apt-get update && \
 # upgrade and install everything zway needs itself in one go
     apt-get install --reinstall -y --no-install-recommends \
